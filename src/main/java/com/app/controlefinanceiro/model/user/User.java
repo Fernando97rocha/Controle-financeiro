@@ -1,11 +1,34 @@
 package com.app.controlefinanceiro.model.user;
 
-public class User {
+import com.app.controlefinanceiro.model.expense.Expense;
+import com.app.controlefinanceiro.model.income.Income;
+import com.app.controlefinanceiro.model.userRole.UserRole;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
     private String password;
+
+    //Relacionamento um(User)-para-muitos(Expense)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Expense> expenses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Income> incomes = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER) //anotação para que os dados UserRole seja carregado juntamente com a entidade User(principal)
+    @JoinTable(name = "user_role",
+              joinColumns = @JoinColumn(name = "user_id"),
+              inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<UserRole> roles = new ArrayList<>();
 
     public User() {
     }
