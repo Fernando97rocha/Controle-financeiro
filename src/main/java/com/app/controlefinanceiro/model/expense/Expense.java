@@ -9,7 +9,7 @@ public class Expense {
     private String description;
     private BigDecimal value;
     private LocalDateTime creationDate;
-    private int category;
+    private String category;
     private Long userId;
 
     public Expense() {
@@ -60,7 +60,7 @@ public class Expense {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
