@@ -1,27 +1,39 @@
 package com.app.controlefinanceiro.model.expense;
 
-import java.math.BigDecimal;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "expense_table")
 public class Expense {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "description")
     private String description;
-    private BigDecimal value;
+    @Column(name = "expense_value")
+    private Double value;
+    @Column(name = "creation_date")
     private LocalDateTime creationDate;
+    @Column(name = "category")
     private String category;
+    @Column(name = "user_id")
     private Long userId;
 
-    public Expense() {
-        this.creationDate = LocalDateTime.now();
-    }
 
-    public Expense(Long id, String description, BigDecimal value, LocalDateTime creationDate, int category) {
+    public Expense(Long id, String description, Double value, LocalDateTime creationDate, String category) {
+
         this.id = id;
         this.description = description;
         this.value = value;
         this.creationDate = LocalDateTime.now();
         this.category = category;
+    }
+
+    public Expense() {
+
     }
 
     public Long getId() {
@@ -40,11 +52,11 @@ public class Expense {
         this.description = description;
     }
 
-    public BigDecimal getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(BigDecimal value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
@@ -56,7 +68,7 @@ public class Expense {
         this.creationDate = creationDate;
     }
 
-    public int getCategory() {
+    public String getCategory() {
         return category;
     }
 

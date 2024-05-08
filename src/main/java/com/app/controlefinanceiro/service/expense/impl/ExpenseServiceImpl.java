@@ -6,8 +6,8 @@ import com.app.controlefinanceiro.service.expense.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ExpenseServiceImpl implements ExpenseService {
 
@@ -15,7 +15,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     private ExpenseRepository repository;
 
     @Override
-    public Expense createExpense(BigDecimal value, String description, String category) {
+    public Expense createExpense(Double value, String description, String category) {
         Expense expense = new Expense();
         expense.setValue(value);
         expense.setDescription(description);
@@ -29,13 +29,19 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public Expense updateExpense(String partOfDescription) {
-
-        Optional<Expense> obj = repository.findByDescription(partOfDescription);
+    public List updateExpense(String partOfDescription) {
+        List<Expense> expenses = repository.findAll();
+        List<Expense> foundedExpenses = new ArrayList<>();
+        for (Expense e : expenses) {
+            if (e.getDescription().contains(partOfDescription)) {
+                foundedExpenses.add(e);
+            }
+        }
+        return foundedExpenses;
     }
 
     @Override
     public List<Expense> findAll() {
-        return List.of();
+        return repository.findAll();
     }
 }
