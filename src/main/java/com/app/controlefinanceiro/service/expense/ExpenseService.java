@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface ExpenseService {
 
-    Expense createExpense(Double value, String description, String category);
+    Expense createExpense(Expense expense);
     void deleteExpense(Long id);
-    List updateExpense(String partOfDescription);
+    List<Expense> updateExpense(String partOfDescription);
     List<Expense> findAll();
 }
