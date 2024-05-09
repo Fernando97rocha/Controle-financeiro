@@ -1,40 +1,37 @@
-package com.app.controlefinanceiro.model.expense;
+package com.app.controlefinanceiro.dto.expense;
 
-import jakarta.persistence.*;
+import com.app.controlefinanceiro.model.expense.Expense;
+import jakarta.persistence.Column;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "expense_table")
-public class Expense {
+public class ExpenseDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "description")
     private String description;
-    @Column(name = "expense_value")
     private Double value;
-    @Column(name = "creation_date")
     private LocalDateTime creationDate;
-    @Column(name = "category")
     private String category;
-    @Column(name = "user_id")
     private Long userId;
 
+    public ExpenseDto() {
+    }
 
-    public Expense(Long id, String description, Double value, LocalDateTime creationDate, String category, Long userId) {
-
+    public ExpenseDto(Long id, String description, Double value, LocalDateTime creationDate, String category, Long userId) {
         this.id = id;
         this.description = description;
         this.value = value;
-        this.creationDate = LocalDateTime.now();
+        this.creationDate = creationDate;
         this.category = category;
         this.userId = userId;
     }
 
-    public Expense() {
-
+    public ExpenseDto(Expense expense) {
+        this.description = expense.getDescription();
+        this.value = expense.getValue();
+        this.creationDate = expense.getCreationDate();
+        this.category = expense.getCategory();
+        this.userId = expense.getUserId();
     }
 
     public Long getId() {
@@ -84,5 +81,4 @@ public class Expense {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-
 }

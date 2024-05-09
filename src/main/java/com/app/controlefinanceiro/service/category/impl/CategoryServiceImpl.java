@@ -39,9 +39,17 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto insert(CategoryDto dto) {
+        List<Category> categoryList = repository.findAll();
+
+        for (Category cat : categoryList) {
+            if (cat.getName().equals(dto.getName()))
+                throw new RuntimeException("This category already exists");
+        }
+
         Category newCategory = new Category();
         newCategory.setName(dto.getName());
         newCategory = repository.save(newCategory);
+
         return new CategoryDto(newCategory);
     }
 
