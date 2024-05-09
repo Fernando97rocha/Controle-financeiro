@@ -6,6 +6,7 @@ import com.app.controlefinanceiro.repository.expense.ExpenseRepository;
 import com.app.controlefinanceiro.service.expense.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,14 +36,30 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<ExpenseDto> updateExpense(ExpenseDto dto) {
-
-        return ;
+    public ExpenseDto updateExpense(Long id, ExpenseDto dto) {
+        Optional<Expense> obj = repository.findById(id);
+        Expense expense = obj.get();
+        expense.setDescription(dto.getDescription());
+        expense.setValue(dto.getValue());
+        expense.setCategory(dto.getCategory());
+        expense = repository.save(expense);
+        return new ExpenseDto(expense);
     }
 
     @Override
     public List<ExpenseDto> findAll() {
+        List<Expense> expenseList = repository.findAll();
+        List<ExpenseDto> dtoList = new ArrayList<>();
+        for (Expense e : expenseList) {
+            dtoList.add(new ExpenseDto(e));
+        }
+        return dtoList;
+    }
 
-        return ;
+    @Override
+    public ExpenseDto findById(Long id) {
+        Optional<Expense> obj = repository.findById(id);
+        Expense expense = obj.get();
+        return new ExpenseDto(expense);
     }
 }

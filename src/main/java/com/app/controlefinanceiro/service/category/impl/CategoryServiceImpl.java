@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto editCategoryName(Long id, CategoryDto dto) {
-        Optional<Category> obj = repository.findById(id); //metodo usado para evitar acessar o banco duas vezes na atualização
+        Optional<Category> obj = repository.findById(id);
         Category category = obj.get();
         category.setName(dto.getName());
         category = repository.save(category);
