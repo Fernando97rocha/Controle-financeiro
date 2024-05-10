@@ -27,6 +27,7 @@ public class ExpenseDto {
     }
 
     public ExpenseDto(Expense expense) {
+        this.id = expense.getId();
         this.description = expense.getDescription();
         this.value = expense.getValue();
         this.creationDate = expense.getCreationDate();

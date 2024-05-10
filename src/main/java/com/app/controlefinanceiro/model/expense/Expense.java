@@ -1,6 +1,7 @@
 package com.app.controlefinanceiro.model.expense;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -16,22 +17,12 @@ public class Expense {
     @Column(name = "expense_value")
     private Double value;
     @Column(name = "creation_date")
+    @CreationTimestamp
     private LocalDateTime creationDate;
     @Column(name = "category")
     private String category;
     @Column(name = "user_id")
     private Long userId;
-
-
-    public Expense(Long id, String description, Double value, LocalDateTime creationDate, String category, Long userId) {
-
-        this.id = id;
-        this.description = description;
-        this.value = value;
-        this.creationDate = LocalDateTime.now();
-        this.category = category;
-        this.userId = userId;
-    }
 
     public Expense() {
 

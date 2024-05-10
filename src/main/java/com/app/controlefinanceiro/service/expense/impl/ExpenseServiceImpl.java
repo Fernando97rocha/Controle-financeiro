@@ -5,12 +5,14 @@ import com.app.controlefinanceiro.model.expense.Expense;
 import com.app.controlefinanceiro.repository.expense.ExpenseRepository;
 import com.app.controlefinanceiro.service.expense.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ExpenseServiceImpl implements ExpenseService {
 
     @Autowired
@@ -18,14 +20,11 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ExpenseDto createExpense(ExpenseDto dto) {
-        Expense expense = new Expense(
-                dto.getId(),
-                dto.getDescription(),
-                dto.getValue(),
-                dto.getCreationDate(),
-                dto.getCategory(),
-                dto.getUserId()
-        );
+        Expense expense = new Expense();
+        expense.setDescription(dto.getDescription());
+        expense.setValue(dto.getValue());
+        expense.setCategory(dto.getCategory());
+        expense.setCreationDate(LocalDateTime.now());
         expense = repository.save(expense);
         return new ExpenseDto(expense);
     }

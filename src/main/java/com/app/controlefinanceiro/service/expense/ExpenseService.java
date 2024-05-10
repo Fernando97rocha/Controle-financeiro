@@ -1,11 +1,11 @@
 package com.app.controlefinanceiro.service.expense;
 
 import com.app.controlefinanceiro.dto.expense.ExpenseDto;
-import com.app.controlefinanceiro.model.expense.Expense;
+import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
+@Service
 public interface ExpenseService {
 
     ExpenseDto createExpense(ExpenseDto dto);
