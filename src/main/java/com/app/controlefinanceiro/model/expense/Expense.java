@@ -1,5 +1,6 @@
 package com.app.controlefinanceiro.model.expense;
 
+import com.app.controlefinanceiro.model.category.Category;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -19,8 +20,9 @@ public class Expense {
     @Column(name = "creation_date")
     @CreationTimestamp
     private LocalDateTime creationDate;
-    @Column(name = "category")
-    private String category;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private Category category;
     @Column(name = "user_id")
     private Long userId;
 
@@ -60,11 +62,11 @@ public class Expense {
         this.creationDate = creationDate;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

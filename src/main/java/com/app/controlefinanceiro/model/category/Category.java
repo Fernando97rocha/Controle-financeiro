@@ -1,7 +1,9 @@
 package com.app.controlefinanceiro.model.category;
 
+import com.app.controlefinanceiro.model.expense.Expense;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +16,8 @@ public class Category {
     private Long id;
     @Column(name = "name")
     private String name;
+    @OneToMany(mappedBy = "category")
+    private List<Expense> expenses;
 
     public Category() {
     }

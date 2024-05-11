@@ -1,7 +1,7 @@
 package com.app.controlefinanceiro.dto.expense;
 
+import com.app.controlefinanceiro.model.category.Category;
 import com.app.controlefinanceiro.model.expense.Expense;
-import jakarta.persistence.Column;
 
 import java.time.LocalDateTime;
 
@@ -11,13 +11,13 @@ public class ExpenseDto {
     private String description;
     private Double value;
     private LocalDateTime creationDate;
-    private String category;
+    private Category category;
     private Long userId;
 
     public ExpenseDto() {
     }
 
-    public ExpenseDto(Long id, String description, Double value, LocalDateTime creationDate, String category, Long userId) {
+    public ExpenseDto(Long id, String description, Double value, LocalDateTime creationDate, Category category, Long userId) {
         this.id = id;
         this.description = description;
         this.value = value;
@@ -67,11 +67,11 @@ public class ExpenseDto {
         this.creationDate = creationDate;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

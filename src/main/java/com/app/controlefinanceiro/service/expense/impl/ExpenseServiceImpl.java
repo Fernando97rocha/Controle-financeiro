@@ -2,6 +2,7 @@ package com.app.controlefinanceiro.service.expense.impl;
 
 import com.app.controlefinanceiro.dto.expense.ExpenseDto;
 import com.app.controlefinanceiro.model.expense.Expense;
+import com.app.controlefinanceiro.repository.category.CategoryRepository;
 import com.app.controlefinanceiro.repository.expense.ExpenseRepository;
 import com.app.controlefinanceiro.service.expense.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Autowired
     private ExpenseRepository repository;
+
+    @Autowired
+    private CategoryRepository category;
 
     @Override
     public ExpenseDto createExpense(ExpenseDto dto) {
