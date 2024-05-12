@@ -1,6 +1,7 @@
 package com.app.controlefinanceiro.model.category;
 
 import com.app.controlefinanceiro.model.expense.Expense;
+import com.app.controlefinanceiro.model.income.Income;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,12 +13,13 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
     @Column(name = "name")
     private String name;
     @OneToMany(mappedBy = "category")
     private List<Expense> expenses;
+    @OneToMany(mappedBy = "category")
+    private List<Income> incomes;
 
     public Category() {
     }
