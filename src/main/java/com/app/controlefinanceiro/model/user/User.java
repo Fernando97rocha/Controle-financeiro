@@ -16,12 +16,14 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(name = "user_id")
     private String userId;
     @Column(name = "user_name")
     private String name;
-    @Column(name = "user_email")
-    private String email;
+    @Column(name = "user_login")
+    private String login;
     @Column(name = "user_password")
     private String password;
     @Column(name = "user_role")
@@ -31,6 +33,13 @@ public class User implements UserDetails {
     private LocalDateTime createDate;
 
     public User() {
+    }
+
+    public User(String userId, String login, String password, UserRole role) {
+        this.userId = userId;
+        this.login = login;
+        this.password = password;
+        this.role = role;
     }
 
     public String getUserId() {
@@ -50,11 +59,11 @@ public class User implements UserDetails {
     }
 
     public String getEmail() {
-        return email;
+        return login;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.login = email;
     }
 
     public String getPassword() {
@@ -76,7 +85,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.login;
     }
 
     @Override

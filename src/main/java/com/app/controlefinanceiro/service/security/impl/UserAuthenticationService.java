@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserAuthorizationService implements UserDetailsService {
+public class UserAuthenticationService implements UserDetailsService {
 
     @Autowired
     UserRepository repository;
@@ -16,6 +16,6 @@ public class UserAuthorizationService implements UserDetailsService {
     // forma do Spring Security buscar os usuários pelo username
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByEmail(username);
+        return repository.findByLogin(username);
     }
 }
