@@ -57,6 +57,14 @@ public class User implements UserDetails {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     //Spring security methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,14 +77,6 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override
