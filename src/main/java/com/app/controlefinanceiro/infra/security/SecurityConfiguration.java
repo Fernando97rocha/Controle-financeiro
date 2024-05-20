@@ -1,4 +1,4 @@
-package com.app.controlefinanceiro.infra;
+package com.app.controlefinanceiro.infra.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
