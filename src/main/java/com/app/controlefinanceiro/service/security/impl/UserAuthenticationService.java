@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class UserAuthenticationService implements UserDetailsService {
 
     @Autowired
-    UserRepository repository;
+    private UserRepository repository;
 
     // forma do Spring Security buscar os usuários pelo username
     @Override

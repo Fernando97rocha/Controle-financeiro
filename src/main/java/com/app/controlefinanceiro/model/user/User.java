@@ -18,10 +18,6 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_id")
-    private String userId;
-    @Column(name = "user_name")
-    private String name;
     @Column(name = "user_login")
     private String login;
     @Column(name = "user_password")
@@ -35,39 +31,22 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String userId, String login, String password, UserRole role) {
-        this.userId = userId;
+    public User(String login, String password, UserRole role) {
         this.login = login;
         this.password = password;
         this.role = role;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getLogin() {
+        return this.login;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return login;
-    }
-
-    public void setEmail(String email) {
-        this.login = email;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -78,7 +57,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UserRole.ADMIN)
-            return List.of(new SimpleGrantedAuthority("USER_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
         else
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }

@@ -1,7 +1,9 @@
 package com.app.controlefinanceiro.controller.authenticationController;
 
 import com.app.controlefinanceiro.dto.authentication.AuthenticationDto;
+import com.app.controlefinanceiro.dto.authentication.LoginResponseDto;
 import com.app.controlefinanceiro.dto.authentication.RegisterDto;
+import com.app.controlefinanceiro.infra.security.TokenService;
 import com.app.controlefinanceiro.model.user.User;
 import com.app.controlefinanceiro.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     @Autowired
+    private TokenService tokenService;
+
+    @Autowired
     private UserRepository repository;
 
     @Autowired
@@ -29,8 +34,9 @@ public class AuthenticationController {
     public ResponseEntity login(@RequestBody @Validated AuthenticationDto dto) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
+        var token = tokenService.generateToken((User) auth.getPrincipal());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
     @PostMapping(value = "/register")
@@ -39,7 +45,7 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(dto.password());
-        User user = new User(dto.userId(), dto.login(), encryptedPassword, dto.role());
+        User user = new User(dto.login(), encryptedPassword, dto.role());
         repository.save(user);
 
         return ResponseEntity.ok().build();

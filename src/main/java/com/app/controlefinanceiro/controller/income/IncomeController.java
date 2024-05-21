@@ -15,7 +15,7 @@ import java.util.Optional;
 public class IncomeController {
 
     @Autowired
-    IncomeService service;
+    private IncomeService service;
 
     @PostMapping
     public ResponseEntity<IncomeDto> insert(@RequestBody IncomeDto dto) {
