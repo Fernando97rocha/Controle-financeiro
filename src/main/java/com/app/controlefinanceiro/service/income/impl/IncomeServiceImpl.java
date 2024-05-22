@@ -2,9 +2,12 @@ package com.app.controlefinanceiro.service.income.impl;
 
 import com.app.controlefinanceiro.dto.income.IncomeDto;
 import com.app.controlefinanceiro.model.income.Income;
+import com.app.controlefinanceiro.model.user.User;
 import com.app.controlefinanceiro.repository.income.IncomeRepository;
 import com.app.controlefinanceiro.service.income.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,6 +28,7 @@ public class IncomeServiceImpl implements IncomeService {
         income.setValue(dto.getValue());
         income.setCategory(dto.getCategory());
         income.setCreationDate(LocalDateTime.now());
+        income.setUserId(getCurrentUserId());
         income = repository.save(income);
         return new IncomeDto(income);
     }
@@ -60,5 +64,12 @@ public class IncomeServiceImpl implements IncomeService {
         Optional<Income> obj = repository.findById(id);
         Income income = obj.get();
         return new IncomeDto(income);
+    }
+
+    //metodo para associar o userId do usuario do contexto atual ao objeto income criado
+    public Long getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        return user.getId();
     }
 }
