@@ -11,6 +11,6 @@ public interface ExpenseService {
     ExpenseDto createExpense(ExpenseDto dto);
     void deleteExpense(ExpenseDto dto);
     ExpenseDto updateExpense(Long id, ExpenseDto dto);
-    List<ExpenseDto> findByUserId();
-    ExpenseDto findById(Long id);
+    List<ExpenseDto> findAllByUserId();
+    ExpenseDto findByIdAndUserId(Long id);
 }

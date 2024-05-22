@@ -17,7 +17,7 @@ public class ExpenseController {
 
     @GetMapping(value = "/list")
     public ResponseEntity<List<ExpenseDto>> expenseList () {
-        List<ExpenseDto> dtoList = service.findByUserId();
+        List<ExpenseDto> dtoList = service.findAllByUserId();
         return ResponseEntity.ok(dtoList);
     }
 
@@ -35,7 +35,7 @@ public class ExpenseController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ExpenseDto> findExpense(@PathVariable Long id) {
-        ExpenseDto dto = service.findById(id);
+        ExpenseDto dto = service.findByIdAndUserId(id);
         return ResponseEntity.ok().body(dto);
     }
 

@@ -37,12 +37,17 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public void deleteExpense(ExpenseDto dto) {
-        repository.deleteById(dto.getId());
+        Long userId = getCurrentUserId();
+
+        Optional<Expense> obj = repository.findByIdAndUserId(dto.getId(), userId);
+        obj.ifPresent(repository::delete);
     }
 
     @Override
     public ExpenseDto updateExpense(Long id, ExpenseDto dto) {
-        Optional<Expense> obj = repository.findById(id);
+        Long userId = getCurrentUserId();
+
+        Optional<Expense> obj = repository.findByIdAndUserId(id, userId);
         Expense expense = obj.get();
         expense.setDescription(dto.getDescription());
         expense.setValue(dto.getValue());
@@ -52,8 +57,10 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<ExpenseDto> findByUserId() {
-        List<Expense> expenses =  expenseByUserId();
+    public List<ExpenseDto> findAllByUserId() {
+        Long userId = getCurrentUserId();
+
+        List<Expense> expenses = repository.findByUserId(userId);
         List<ExpenseDto> dtoList = new ArrayList<>();
         for (Expense e : expenses) {
             dtoList.add(new ExpenseDto(e));
@@ -62,14 +69,12 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public ExpenseDto findById(Long id) {
-        List<Expense> expenses = expenseByUserId();
-        for (Expense e : expenses) {
-            if (e.getId().equals(id)) {
-                return new ExpenseDto(e);
-            }
-        }
-        return null;
+    public ExpenseDto findByIdAndUserId(Long id) {
+        Long userId = getCurrentUserId();
+
+        Optional<Expense> obj = repository.findByIdAndUserId(id, userId);
+        Expense expense = obj.orElseThrow();
+        return new ExpenseDto(expense);
     }
 
     public Long getCurrentUserId() {
@@ -78,7 +83,4 @@ public class ExpenseServiceImpl implements ExpenseService {
         return user.getId();
     }
 
-    public List<Expense> expenseByUserId() {
-        return repository.findByUserId(getCurrentUserId());
-    }
 }
