@@ -35,12 +35,18 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public void deleteIncome(IncomeDto dto) {
-        repository.deleteById(dto.getId());
+        Long userId = getCurrentUserId();
+
+        Optional<Income> obj = repository.findByIdAndUserId(dto.getId(), userId);
+        obj.ifPresent(repository::delete);
     }
 
     @Override
     public IncomeDto updateIncome(Long id, IncomeDto dto) {
-        Optional<Income> obj = repository.findById(id);
+        Long userId = getCurrentUserId();
+
+        Optional<Income> obj = repository.findByIdAndUserId(id, userId);
+
         Income income = obj.get();
         income.setValue(dto.getValue());
         income.setCategory(dto.getCategory());
@@ -50,19 +56,22 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public List<IncomeDto> findAll() {
-        List<Income> incomes = repository.findAll();
+    public List<IncomeDto> findAllByUserId() {
+        Long userId = getCurrentUserId();
+
+        List<Income> incomes = repository.findByUserId(userId);
         List<IncomeDto> dtoList = new ArrayList<>();
-        for (Income i : incomes) {
+        for (Income i : incomes)
             dtoList.add(new IncomeDto(i));
-        }
         return dtoList;
     }
 
     @Override
     public IncomeDto findById(Long id) {
-        Optional<Income> obj = repository.findById(id);
-        Income income = obj.get();
+        Long userId = getCurrentUserId();
+
+        Optional<Income> obj = repository.findByIdAndUserId(id, userId);
+        Income income = obj.orElseThrow();
         return new IncomeDto(income);
     }
 
@@ -72,4 +81,5 @@ public class IncomeServiceImpl implements IncomeService {
         User user = (User) authentication.getPrincipal();
         return user.getId();
     }
+
 }

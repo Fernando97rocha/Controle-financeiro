@@ -52,10 +52,10 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<ExpenseDto> findAll() {
-        List<Expense> expenseList = repository.findAll();
+    public List<ExpenseDto> findByUserId() {
+        List<Expense> expenses =  expenseByUserId();
         List<ExpenseDto> dtoList = new ArrayList<>();
-        for (Expense e : expenseList) {
+        for (Expense e : expenses) {
             dtoList.add(new ExpenseDto(e));
         }
         return dtoList;
@@ -63,14 +63,22 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ExpenseDto findById(Long id) {
-        Optional<Expense> obj = repository.findById(id);
-        Expense expense = obj.get();
-        return new ExpenseDto(expense);
+        List<Expense> expenses = expenseByUserId();
+        for (Expense e : expenses) {
+            if (e.getId().equals(id)) {
+                return new ExpenseDto(e);
+            }
+        }
+        return null;
     }
 
     public Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         return user.getId();
+    }
+
+    public List<Expense> expenseByUserId() {
+        return repository.findByUserId(getCurrentUserId());
     }
 }

@@ -36,8 +36,8 @@ public class IncomeController {
     }
 
     @GetMapping(value = "/list")
-    public ResponseEntity<List<IncomeDto>> findAll() {
-        List<IncomeDto> dtoList = service.findAll();
+    public ResponseEntity<List<IncomeDto>> findAllByUserId() {
+        List<IncomeDto> dtoList = service.findAllByUserId();
         return ResponseEntity.ok().body(dtoList);
     }
 

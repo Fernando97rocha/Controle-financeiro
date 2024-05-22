@@ -11,7 +11,7 @@ public interface IncomeService {
     IncomeDto createIncome(IncomeDto dto);
     void deleteIncome(IncomeDto dto);
     IncomeDto updateIncome(Long id, IncomeDto dto);
-    List<IncomeDto> findAll();
+    List<IncomeDto> findAllByUserId();
     IncomeDto findById(Long id);
 
 }

@@ -17,7 +17,7 @@ public class ExpenseController {
 
     @GetMapping(value = "/list")
     public ResponseEntity<List<ExpenseDto>> expenseList () {
-        List<ExpenseDto> dtoList = service.findAll();
+        List<ExpenseDto> dtoList = service.findByUserId();
         return ResponseEntity.ok(dtoList);
     }
 
