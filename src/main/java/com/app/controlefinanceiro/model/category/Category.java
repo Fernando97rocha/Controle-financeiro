@@ -16,6 +16,8 @@ public class Category {
     private Long id;
     @Column(name = "name")
     private String name;
+    @Column
+    private Long userId;
     @OneToMany(mappedBy = "category")
     private List<Expense> expenses;
     @OneToMany(mappedBy = "category")
@@ -42,6 +44,14 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override

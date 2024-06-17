@@ -24,6 +24,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ExpenseDto createExpense(ExpenseDto dto) {
+
         Expense expense = new Expense();
         expense.setDescription(dto.getDescription());
         expense.setValue(dto.getValue());
@@ -40,7 +41,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         Long userId = getCurrentUserId();
 
         Optional<Expense> obj = repository.findByIdAndUserId(dto.getId(), userId);
-        obj.ifPresent(repository::delete);
+        Expense expense = obj.get();
+        repository.delete(expense);
     }
 
     @Override

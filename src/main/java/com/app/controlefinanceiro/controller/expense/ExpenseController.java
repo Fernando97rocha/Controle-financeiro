@@ -40,8 +40,8 @@ public class ExpenseController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ExpenseDto> delete(@PathVariable Long id, ExpenseDto dto) {
+    public ResponseEntity delete(@PathVariable Long id, ExpenseDto dto) {
         service.deleteExpense(dto);
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok("deleted");
     }
 }

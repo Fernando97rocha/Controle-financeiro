@@ -2,10 +2,14 @@ package com.app.controlefinanceiro.service.category.impl;
 
 import com.app.controlefinanceiro.dto.category.CategoryDto;
 import com.app.controlefinanceiro.model.category.Category;
+import com.app.controlefinanceiro.model.user.User;
 import com.app.controlefinanceiro.repository.category.CategoryRepository;
 import com.app.controlefinanceiro.service.category.CategoryService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,15 +43,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto insert(CategoryDto dto) {
-        List<Category> categoryList = repository.findAll();
-
-        for (Category cat : categoryList) {
-            if (cat.getName().equals(dto.getName()))
-                throw new RuntimeException("This category already exists");
-        }
 
         Category newCategory = new Category();
         newCategory.setName(dto.getName());
+        newCategory.setUserId(getCurrentUserId());
         newCategory = repository.save(newCategory);
 
         return new CategoryDto(newCategory);
@@ -59,6 +58,12 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = obj.
                             orElseThrow(() -> new EntityNotFoundException("Entity not founded"));
         return new CategoryDto(category);
+    }
+
+    public Long getCurrentUserId () {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        return user.getId();
     }
 
 }

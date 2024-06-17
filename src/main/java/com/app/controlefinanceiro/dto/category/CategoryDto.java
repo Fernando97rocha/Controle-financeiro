@@ -6,18 +6,15 @@ public class CategoryDto {
 
      private Long id;
      private String name;
+     private Long userId;
 
     public CategoryDto() {
-    }
-
-    public CategoryDto(Long id, String name) {
-        this.id = id;
-        this.name = name;
     }
 
     public CategoryDto(Category entity) {
         this.id = entity.getId();
         this.name = entity.getName();
+        this.userId = entity.getUserId();
     }
 
     public Long getId() {
@@ -34,5 +31,13 @@ public class CategoryDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
