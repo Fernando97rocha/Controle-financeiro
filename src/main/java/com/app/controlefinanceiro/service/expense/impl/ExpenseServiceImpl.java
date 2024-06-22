@@ -18,7 +18,6 @@ import java.util.Optional;
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
 
-
     @Autowired
     private ExpenseRepository repository;
 
@@ -28,9 +27,10 @@ public class ExpenseServiceImpl implements ExpenseService {
         Expense expense = new Expense();
         expense.setDescription(dto.getDescription());
         expense.setValue(dto.getValue());
-        expense.setCategory(dto.getCategory());
+        expense.setCategoryId(dto.getCategoryId());
         expense.setCreationDate(LocalDateTime.now());
         expense.setUserId(getCurrentUserId());
+
         expense = repository.save(expense);
 
         return new ExpenseDto(expense);
@@ -53,7 +53,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         Expense expense = obj.get();
         expense.setDescription(dto.getDescription());
         expense.setValue(dto.getValue());
-        expense.setCategory(dto.getCategory());
+        expense.setCategoryId(dto.getCategoryId());
         expense = repository.save(expense);
         return new ExpenseDto(expense);
     }

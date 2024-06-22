@@ -11,19 +11,10 @@ public class ExpenseDto {
     private String description;
     private Double value;
     private LocalDateTime creationDate;
-    private Category category;
+    private Long categoryId;
     private Long userId;
 
     public ExpenseDto() {
-    }
-
-    public ExpenseDto(Long id, String description, Double value, LocalDateTime creationDate, Category category, Long userId) {
-        this.id = id;
-        this.description = description;
-        this.value = value;
-        this.creationDate = creationDate;
-        this.category = category;
-        this.userId = userId;
     }
 
     public ExpenseDto(Expense expense) {
@@ -31,7 +22,7 @@ public class ExpenseDto {
         this.description = expense.getDescription();
         this.value = expense.getValue();
         this.creationDate = expense.getCreationDate();
-        this.category = expense.getCategory();
+        this.categoryId = expense.getCategoryId();
         this.userId = expense.getUserId();
     }
 
@@ -51,6 +42,14 @@ public class ExpenseDto {
         this.description = description;
     }
 
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public Double getValue() {
         return value;
     }
@@ -65,14 +64,6 @@ public class ExpenseDto {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public Long getUserId() {

@@ -18,10 +18,6 @@ public class Category {
     private String name;
     @Column
     private Long userId;
-    @OneToMany(mappedBy = "category")
-    private List<Expense> expenses;
-    @OneToMany(mappedBy = "category")
-    private List<Income> incomes;
 
     public Category() {
     }

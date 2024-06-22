@@ -23,13 +23,16 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public IncomeDto createIncome(IncomeDto dto) {
+
         Income income = new Income();
         income.setDescription(dto.getDescription());
         income.setValue(dto.getValue());
-        income.setCategory(dto.getCategory());
+        income.setCategoryId(dto.getCategoryId());
         income.setCreationDate(LocalDateTime.now());
         income.setUserId(getCurrentUserId());
+
         income = repository.save(income);
+
         return new IncomeDto(income);
     }
 
@@ -49,7 +52,7 @@ public class IncomeServiceImpl implements IncomeService {
 
         Income income = obj.get();
         income.setValue(dto.getValue());
-        income.setCategory(dto.getCategory());
+        income.setCategoryId(dto.getCategoryId());
         income.setDescription(dto.getDescription());
         income = repository.save(income);
         return new IncomeDto(income);

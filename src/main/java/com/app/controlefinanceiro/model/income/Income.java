@@ -1,6 +1,5 @@
 package com.app.controlefinanceiro.model.income;
 
-import com.app.controlefinanceiro.model.category.Category;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -21,9 +20,8 @@ public class Income {
     @Column(name = "creation_date")
     @CreationTimestamp
     private LocalDateTime creationDate;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @Column(name = "category_id")
+    private Long categoryId;
     @Column(name = "user_id")
     private Long userId;
 
@@ -62,16 +60,16 @@ public class Income {
         this.creationDate = creationDate;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public Long getUserId() {
         return userId;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public void setUserId(Long userId) {
@@ -83,11 +81,16 @@ public class Income {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Income income = (Income) o;
-        return Objects.equals(id, income.id) && Objects.equals(description, income.description) && Objects.equals(value, income.value) && Objects.equals(creationDate, income.creationDate) && Objects.equals(category, income.category) && Objects.equals(userId, income.userId);
+        return Objects.equals(id, income.id) &&
+                Objects.equals(description, income.description) &&
+                Objects.equals(value, income.value) &&
+                Objects.equals(creationDate, income.creationDate) &&
+                Objects.equals(categoryId, income.categoryId) &&
+                Objects.equals(userId, income.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, value, creationDate, category, userId);
+        return Objects.hash(id, description, value, creationDate, categoryId, userId);
     }
 }

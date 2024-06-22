@@ -17,7 +17,7 @@ public class CategoryController {
 
     @GetMapping(value = "/list")
     public ResponseEntity<List<CategoryDto>> findAll() {
-        List<CategoryDto> list = service.findAll();
+        List<CategoryDto> list = service.findAllByUserId();
         return ResponseEntity.ok(list);
     }
 
@@ -38,4 +38,5 @@ public class CategoryController {
         dto = service.editCategoryName(id, dto);
         return ResponseEntity.ok().body(dto);
     }
+
 }

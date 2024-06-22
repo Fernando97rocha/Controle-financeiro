@@ -5,9 +5,7 @@ import com.app.controlefinanceiro.model.category.Category;
 import com.app.controlefinanceiro.model.user.User;
 import com.app.controlefinanceiro.repository.category.CategoryRepository;
 import com.app.controlefinanceiro.service.category.CategoryService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -47,6 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category newCategory = new Category();
         newCategory.setName(dto.getName());
         newCategory.setUserId(getCurrentUserId());
+
         newCategory = repository.save(newCategory);
 
         return new CategoryDto(newCategory);
@@ -54,10 +53,20 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto findById(Long id) {
-        Optional<Category> obj = repository.findById(id);
-        Category category = obj.
-                            orElseThrow(() -> new EntityNotFoundException("Entity not founded"));
-        return new CategoryDto(category);
+        return null;
+    }
+
+    @Override
+    public List<CategoryDto> findAllByUserId() {
+        Long userId = getCurrentUserId();
+
+        List<Category> categoriesByUserId = repository.findAllByUserId(userId);
+        List<CategoryDto> dtoList = new ArrayList<>();
+
+        for (Category c : categoriesByUserId) {
+            dtoList.add(new CategoryDto(c));
+        }
+        return dtoList;
     }
 
     public Long getCurrentUserId () {

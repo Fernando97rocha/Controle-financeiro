@@ -11,7 +11,7 @@ public class IncomeDto {
     private String description;
     private Double value;
     private LocalDateTime creationDate;
-    private Category category;
+    private Long categoryId;
     private Long userId;
 
     public IncomeDto() {
@@ -22,7 +22,7 @@ public class IncomeDto {
         this.description = income.getDescription();
         this.value = income.getValue();
         this.creationDate = income.getCreationDate();
-        this.category = income.getCategory();
+        this.categoryId = income.getCategoryId();
         this.userId = income.getUserId();
     }
 
@@ -31,26 +31,32 @@ public class IncomeDto {
     }
 
     public void setId(Long id) {
+
         this.id = id;
     }
 
     public String getDescription() {
+
         return description;
     }
 
     public void setDescription(String description) {
+
         this.description = description;
     }
 
     public Double getValue() {
+
         return value;
     }
 
     public void setValue(Double value) {
+
         this.value = value;
     }
 
     public LocalDateTime getCreationDate() {
+
         return creationDate;
     }
 
@@ -58,12 +64,12 @@ public class IncomeDto {
         this.creationDate = creationDate;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Long getUserId() {

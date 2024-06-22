@@ -20,9 +20,8 @@ public class Expense {
     @Column(name = "creation_date")
     @CreationTimestamp
     private LocalDateTime creationDate;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @Column(name = "categoryId")
+    private Long categoryId;
     @Column(name = "user_id")
     private Long userId;
 
@@ -62,15 +61,6 @@ public class Expense {
         this.creationDate = creationDate;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-
-    }
-
     public Long getUserId() {
         return userId;
     }
@@ -79,4 +69,11 @@ public class Expense {
         this.userId = userId;
     }
 
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
 }
