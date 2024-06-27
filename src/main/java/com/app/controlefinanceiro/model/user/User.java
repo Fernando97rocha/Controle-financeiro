@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @CreationTimestamp
     private LocalDateTime createDate;
 
-    public User() {
+    public User(String testuser, String password, UserRole user, List<GrantedAuthority> roleUser) {
     }
 
     public User(String login, String password, UserRole role) {
@@ -36,6 +36,11 @@ public class User implements UserDetails {
         this.password = password;
         this.role = role;
     }
+
+    public User() {
+    }
+
+
 
     public String getLogin() {
         return this.login;
@@ -89,5 +94,9 @@ public class User implements UserDetails {
 
     public Long getId() {
         return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
