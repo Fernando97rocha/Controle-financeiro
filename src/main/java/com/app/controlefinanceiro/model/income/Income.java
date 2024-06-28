@@ -1,5 +1,6 @@
 package com.app.controlefinanceiro.model.income;
 
+import com.app.controlefinanceiro.dto.income.IncomeDto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -26,6 +27,9 @@ public class Income {
     private Long userId;
 
     public Income() {
+    }
+
+    public Income(IncomeDto dto) {
     }
 
     public Long getId() {
