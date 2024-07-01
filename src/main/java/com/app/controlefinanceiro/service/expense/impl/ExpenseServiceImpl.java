@@ -26,12 +26,16 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         Expense expense = new Expense();
         expense.setDescription(dto.getDescription());
-        expense.setValue(dto.getValue());
+        if (dto.getValue() > 0) {
+            expense.setValue(dto.getValue() * -1);
+        } else {
+            expense.setValue(dto.getValue());
+        }
         expense.setCategoryId(dto.getCategoryId());
         expense.setCreationDate(LocalDateTime.now());
         expense.setUserId(getCurrentUserId());
 
-        expense = repository.save(expense);
+        repository.save(expense);
 
         return new ExpenseDto(expense);
     }

@@ -16,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -51,8 +50,8 @@ class IncomeServiceImplTest {
     @Test
     void shouldCreateANewIncome() {
         //Arrange
+        Long userId = incomeService.getCurrentUserId();
         IncomeDto dto = new IncomeDto();
-        dto.setId(1L);
         dto.setDescription("Salary");
         dto.setValue(3000.00);
         dto.setCategoryId(1L);
@@ -60,7 +59,6 @@ class IncomeServiceImplTest {
         Income income = new Income(dto);
         income.setId(1L);
         when(incomeRepository.save(any(Income.class))).thenReturn(income);
-        when(incomeRepository.findAll()).thenReturn(Collections.singletonList(income));
         //Act
         IncomeDto result = incomeService.createIncome(dto);
         //Assert
@@ -69,7 +67,7 @@ class IncomeServiceImplTest {
         Assertions.assertEquals(dto.getValue(), result.getValue());
         Assertions.assertNotNull(result.getCreationDate());
         Assertions.assertNotNull(result.getUserId());
-        Assertions.assertFalse(incomeRepository.findAll().isEmpty());
+        Assertions.assertEquals(userId, result.getUserId());
     }
 
     @Test
@@ -94,7 +92,7 @@ class IncomeServiceImplTest {
     }
 
     @Test
-    void ShouldUpdateIncomeWhenUserIsAuthenticated() {
+    void ShouldUpdateIncome() {
 
         Long userId = incomeService.getCurrentUserId();
 
@@ -138,12 +136,18 @@ class IncomeServiceImplTest {
     }
 
     @Test
-    void findById() {
+    void shouldFindByIdWhenExists() {
+        Long userId = incomeService.getCurrentUserId();
+        Long id = 5L;
 
+        Income income = new Income();
+        income.setId(id);
+        income.setUserId(userId);
 
-    }
+        when(incomeRepository.findByIdAndUserId(id, userId)).thenReturn(Optional.of(income));
 
-    @Test
-    void getCurrentUserId() {
+        IncomeDto result = incomeService.findById(id);
+
+        Assertions.assertNotNull(result);
     }
 }

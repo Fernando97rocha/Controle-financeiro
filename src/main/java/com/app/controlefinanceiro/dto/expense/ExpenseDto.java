@@ -1,6 +1,5 @@
 package com.app.controlefinanceiro.dto.expense;
 
-import com.app.controlefinanceiro.model.category.Category;
 import com.app.controlefinanceiro.model.expense.Expense;
 
 import java.time.LocalDateTime;
