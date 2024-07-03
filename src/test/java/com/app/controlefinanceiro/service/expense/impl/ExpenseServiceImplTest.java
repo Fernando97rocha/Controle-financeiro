@@ -19,7 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ExpenseServiceImplTest {
@@ -66,6 +66,7 @@ class ExpenseServiceImplTest {
         Assertions.assertNotNull(result.getCreationDate());
         Assertions.assertNotNull(result.getUserId());
         Assertions.assertEquals(userId, result.getUserId());
+        Assertions.assertFalse(expenseRepository.findAll().isEmpty());
     }
 
     @Test
@@ -75,20 +76,14 @@ class ExpenseServiceImplTest {
 
         Expense expense = new Expense();
         expense.setId(1L);
-        expense.setDescription("Pet");
-        expense.setValue(200.00);
-        expense.setCategoryId(1L);
-        expenseRepository.save(expense);
 
         ExpenseDto dto = new ExpenseDto(expense);
 
-        when(expenseRepository.findByIdAndUserId(userId, expense.getId())).thenReturn(Optional.of(expense));
+        when(expenseRepository.findByIdAndUserId(dto.getId(), userId)).thenReturn(Optional.of(expense));
 
         expenseService.deleteExpense(dto);
 
-        Assertions.assertFalse(expenseRepository.existsById(expense.getId()));
-        Assertions.assertTrue(expenseRepository.findAll().isEmpty());
-
+        verify(expenseRepository, times(1)).delete(expense);
     }
 
     @Test

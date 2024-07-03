@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class IncomeServiceImplTest {
@@ -76,10 +76,6 @@ class IncomeServiceImplTest {
         //Arrange
         Income income = new Income();
         income.setId(1L);
-        income.setCategoryId(1L);
-        income.setValue(3000.00);
-        income.setDescription("Salary");
-        incomeRepository.save(income);
 
         IncomeDto dto = new IncomeDto(income);
 
@@ -87,8 +83,7 @@ class IncomeServiceImplTest {
         //Act
         incomeService.deleteIncome(dto);
         //Assert
-        Assertions.assertFalse(incomeRepository.existsById(dto.getId()));
-        Assertions.assertTrue(incomeRepository.findAll().isEmpty());
+        verify(incomeRepository, times(1)).delete(income);
     }
 
     @Test
