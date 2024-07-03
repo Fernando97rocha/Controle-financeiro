@@ -18,6 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -115,11 +117,38 @@ class ExpenseServiceImplTest {
 
     @Test
     void findAllByUserId() {
+        Long userId = expenseService.getCurrentUserId();
 
+        ExpenseDto dto = new ExpenseDto();
+        dto.setUserId(1L);
 
+        Expense expense = new Expense(dto);
+
+        when(expenseRepository.findByUserId(userId)).thenReturn(Collections.singletonList(expense));
+
+        List<ExpenseDto> result = expenseService.findAllByUserId();
+
+        Assertions.assertFalse(result.isEmpty());
+        Assertions.assertEquals(1, result.size());
+        verify(expenseRepository, times(1)).findByUserId(userId);
     }
 
     @Test
     void findByIdAndUserId() {
+
+        Long userId = expenseService.getCurrentUserId();
+
+        ExpenseDto dto = new ExpenseDto();
+        dto.setUserId(1L);
+
+        Expense expense = new Expense(dto);
+
+        when(expenseRepository.findByUserId(userId)).thenReturn(Collections.singletonList(expense));
+
+        List<ExpenseDto> result = expenseService.findAllByUserId();
+
+        Assertions.assertFalse(result.isEmpty());
+        Assertions.assertEquals(1, result.size());
+        verify(expenseRepository, times(1)).findByUserId(userId);
     }
 }

@@ -128,6 +128,7 @@ class IncomeServiceImplTest {
 
         Assertions.assertFalse(result.isEmpty());
         Assertions.assertEquals(1, result.size());
+        verify(incomeRepository, times(1)).findByUserId(userId);
     }
 
     @Test
