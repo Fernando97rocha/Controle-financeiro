@@ -55,9 +55,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         Optional<Expense> obj = repository.findByIdAndUserId(id, userId);
         Expense expense = obj.get();
-        expense.setDescription(dto.getDescription());
-        expense.setValue(dto.getValue());
-        expense.setCategoryId(dto.getCategoryId());
+        if (dto.getDescription() != null) expense.setDescription(dto.getDescription());
+        if (dto.getValue() != null) expense.setValue(dto.getValue());
+        if (dto.getCategoryId() != null) expense.setCategoryId(dto.getCategoryId());
         expense = repository.save(expense);
         return new ExpenseDto(expense);
     }

@@ -57,7 +57,7 @@ class IncomeServiceImplTest {
         dto.setCategoryId(1L);
 
         Income income = new Income(dto);
-        income.setId(1L);
+
         when(incomeRepository.save(any(Income.class))).thenReturn(income);
         //Act
         IncomeDto result = incomeService.createIncome(dto);
@@ -98,12 +98,11 @@ class IncomeServiceImplTest {
         existentIncome.setCategoryId(1L);
         existentIncome.setUserId(userId);
 
-        when(incomeRepository.findByIdAndUserId(1L, 1L)).thenReturn(Optional.of(existentIncome));
+        when(incomeRepository.findByIdAndUserId(existentIncome.getId(), userId)).thenReturn(Optional.of(existentIncome));
 
         IncomeDto dtoToUpdateIncome = new IncomeDto();
         dtoToUpdateIncome.setDescription("Sale");
         dtoToUpdateIncome.setValue(5000.00);
-        dtoToUpdateIncome.setCategoryId(1L);
 
         when(incomeRepository.save(any(Income.class))).thenReturn(existentIncome);
 
@@ -111,6 +110,7 @@ class IncomeServiceImplTest {
 
         Assertions.assertEquals(result.getDescription(), dtoToUpdateIncome.getDescription());
         Assertions.assertEquals(result.getValue(), dtoToUpdateIncome.getValue());
+        Assertions.assertEquals(result.getCategoryId(), dtoToUpdateIncome.getCategoryId());
     }
 
     @Test
@@ -143,6 +143,6 @@ class IncomeServiceImplTest {
 
         IncomeDto result = incomeService.findById(id);
 
-        Assertions.assertNotNull(result);
+        verify(incomeRepository, times(1)).findByIdAndUserId(id, userId);
     }
 }

@@ -26,8 +26,10 @@ public class IncomeServiceImpl implements IncomeService {
     public IncomeDto createIncome(IncomeDto dto) {
 
         Income income = new Income();
-        income.setDescription(dto.getDescription());
-        income.setValue(dto.getValue());
+        if (dto.getDescription() != null) income.setDescription(dto.getDescription());
+            else throw new RuntimeException("Income description is required");
+        if (dto.getValue() != null)income.setValue(dto.getValue());
+            else throw new RuntimeException("Income amount is required");
         income.setCategoryId(dto.getCategoryId());
         income.setCreationDate(LocalDateTime.now());
         income.setUserId(getCurrentUserId());

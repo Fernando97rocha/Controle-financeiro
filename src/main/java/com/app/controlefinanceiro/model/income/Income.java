@@ -30,6 +30,9 @@ public class Income {
     }
 
     public Income(IncomeDto dto) {
+        this.description = dto.getDescription();
+        this.value = dto.getValue();
+        this.categoryId = dto.getCategoryId();
     }
 
     public Long getId() {

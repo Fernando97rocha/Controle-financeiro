@@ -1,7 +1,9 @@
 package com.app.controlefinanceiro.service.expense.impl;
 
 import com.app.controlefinanceiro.dto.expense.ExpenseDto;
+import com.app.controlefinanceiro.dto.income.IncomeDto;
 import com.app.controlefinanceiro.model.expense.Expense;
+import com.app.controlefinanceiro.model.income.Income;
 import com.app.controlefinanceiro.model.user.User;
 import com.app.controlefinanceiro.repository.expense.ExpenseRepository;
 import org.junit.jupiter.api.Assertions;
@@ -49,12 +51,11 @@ class ExpenseServiceImplTest {
     void shouldCreateANewExpense() {
         Long userId = expenseService.getCurrentUserId();
         ExpenseDto dto = new ExpenseDto();
-        dto.setValue(200.00);
-        dto.setCategoryId(1L);
         dto.setDescription("Pet");
+        dto.setValue(120.00);
+        dto.setCategoryId(1L);
 
         Expense expense = new Expense(dto);
-        expense.setId(1L);
 
         when(expenseRepository.save(any(Expense.class))).thenReturn(expense);
         //Act
@@ -66,7 +67,6 @@ class ExpenseServiceImplTest {
         Assertions.assertNotNull(result.getCreationDate());
         Assertions.assertNotNull(result.getUserId());
         Assertions.assertEquals(userId, result.getUserId());
-        Assertions.assertFalse(expenseRepository.findAll().isEmpty());
     }
 
     @Test
@@ -88,10 +88,36 @@ class ExpenseServiceImplTest {
 
     @Test
     void updateExpense() {
+        Long userId = expenseService.getCurrentUserId();
+
+        Expense existingExpense = new Expense();
+        existingExpense.setId(1L);
+        existingExpense.setDescription("Salary");
+        existingExpense.setValue(3000.00);
+        existingExpense.setCategoryId(1L);
+
+        when(expenseRepository.findByIdAndUserId(existingExpense.getId(), userId)).
+                thenReturn(Optional.of(existingExpense));
+
+        ExpenseDto dtoToUpdate = new ExpenseDto();
+        dtoToUpdate.setDescription("Extra");
+        dtoToUpdate.setValue(500.00);
+        dtoToUpdate.setCategoryId(2L);
+
+        when(expenseRepository.save(any(Expense.class))).thenReturn(existingExpense);
+
+        ExpenseDto result = expenseService.updateExpense(existingExpense.getId(), dtoToUpdate);
+
+        Assertions.assertEquals(result.getDescription(), dtoToUpdate.getDescription());
+        Assertions.assertEquals(result.getValue(), dtoToUpdate.getValue());
+        Assertions.assertEquals(result.getCategoryId(), dtoToUpdate.getCategoryId());
     }
 
     @Test
     void findAllByUserId() {
+
+
+
     }
 
     @Test
