@@ -25,12 +25,13 @@ public class ExpenseServiceImpl implements ExpenseService {
     public ExpenseDto createExpense(ExpenseDto dto) {
 
         Expense expense = new Expense();
-        expense.setDescription(dto.getDescription());
-        if (dto.getValue() > 0) {
+        if (dto.getDescription() != null) expense.setDescription(dto.getDescription());
+            else throw new RuntimeException("Expense description is required");
+        if (dto.getValue() > 0)
             expense.setValue(dto.getValue() * -1);
-        } else {
-            expense.setValue(dto.getValue());
-        }
+        else
+            if (dto.getValue() != null) expense.setValue(dto.getValue());
+                else throw new RuntimeException("Expense amount is required");
         expense.setCategoryId(dto.getCategoryId());
         expense.setCreationDate(LocalDateTime.now());
         expense.setUserId(getCurrentUserId());
