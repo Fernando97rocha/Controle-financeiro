@@ -72,7 +72,7 @@ class ExpenseServiceImplTest {
     }
 
     @Test
-    void shouldDeleteAnExpenseWhenExists() {
+    void shouldDeleteAnExpense() {
 
         Long userId = expenseService.getCurrentUserId();
 
@@ -89,7 +89,7 @@ class ExpenseServiceImplTest {
     }
 
     @Test
-    void updateExpense() {
+    void shouldUpdateAnExpense() {
         Long userId = expenseService.getCurrentUserId();
 
         Expense existingExpense = new Expense();
@@ -116,7 +116,7 @@ class ExpenseServiceImplTest {
     }
 
     @Test
-    void findAllByUserId() {
+    void shouldFindAllExpensesByUserId() {
         Long userId = expenseService.getCurrentUserId();
 
         ExpenseDto dto = new ExpenseDto();
@@ -134,21 +134,19 @@ class ExpenseServiceImplTest {
     }
 
     @Test
-    void findByIdAndUserId() {
+    void shouldFindAnExpenseById() {
 
         Long userId = expenseService.getCurrentUserId();
+        Long id = 5L;
 
-        ExpenseDto dto = new ExpenseDto();
-        dto.setUserId(1L);
+        Expense expense = new Expense();
+        expense.setId(id);
+        expense.setUserId(userId);
 
-        Expense expense = new Expense(dto);
+        when(expenseRepository.findByIdAndUserId(id, userId)).thenReturn(Optional.of(expense));
 
-        when(expenseRepository.findByUserId(userId)).thenReturn(Collections.singletonList(expense));
+        ExpenseDto result = expenseService.findById(id);
 
-        List<ExpenseDto> result = expenseService.findAllByUserId();
-
-        Assertions.assertFalse(result.isEmpty());
-        Assertions.assertEquals(1, result.size());
-        verify(expenseRepository, times(1)).findByUserId(userId);
+        verify(expenseRepository, times(1)).findByIdAndUserId(id, userId);
     }
 }

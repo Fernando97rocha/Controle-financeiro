@@ -35,7 +35,7 @@ public class ExpenseController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ExpenseDto> findExpense(@PathVariable Long id) {
-        ExpenseDto dto = service.findByIdAndUserId(id);
+        ExpenseDto dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
     }
 

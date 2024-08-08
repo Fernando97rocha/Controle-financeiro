@@ -7,6 +7,7 @@ public class CategoryDto {
      private Long id;
      private String name;
      private Long userId;
+     private String type;
 
     public CategoryDto() {
     }
@@ -15,6 +16,7 @@ public class CategoryDto {
         this.id = entity.getId();
         this.name = entity.getName();
         this.userId = entity.getUserId();
+        this.type = entity.getType();
     }
 
     public Long getId() {
@@ -31,6 +33,14 @@ public class CategoryDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Long getUserId() {

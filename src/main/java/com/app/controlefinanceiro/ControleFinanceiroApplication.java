@@ -9,7 +9,7 @@ public class ControleFinanceiroApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ControleFinanceiroApplication.class, args);
 
-		System.out.println("Hello World");
+		System.out.println("Conected..........");
 		/*
 		Links úteis para o aprendizado
 		https://raquelvl.github.io/psoft/material/back_relacionamentosJPA.html

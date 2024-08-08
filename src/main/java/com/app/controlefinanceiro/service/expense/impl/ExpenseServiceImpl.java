@@ -76,7 +76,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public ExpenseDto findByIdAndUserId(Long id) {
+    public ExpenseDto findById(Long id) {
         Long userId = getCurrentUserId();
 
         Optional<Expense> obj = repository.findByIdAndUserId(id, userId);

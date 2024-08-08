@@ -71,7 +71,7 @@ class IncomeServiceImplTest {
     }
 
     @Test
-    void shouldDeleteIncomeWhenExists() {
+    void shouldDeleteAnIncome() {
         Long userId = incomeService.getCurrentUserId();
         //Arrange
         Income income = new Income();
@@ -114,7 +114,7 @@ class IncomeServiceImplTest {
     }
 
     @Test
-    void shouldFindAllIncomeByUserIdWhenExists() {
+    void shouldFindAllIncomesByUserId() {
         Long userId = incomeService.getCurrentUserId();
 
         IncomeDto dto = new IncomeDto();
@@ -132,7 +132,7 @@ class IncomeServiceImplTest {
     }
 
     @Test
-    void shouldFindByIdWhenExists() {
+    void shouldFindAnIncomeById() {
         Long userId = incomeService.getCurrentUserId();
         Long id = 5L;
 

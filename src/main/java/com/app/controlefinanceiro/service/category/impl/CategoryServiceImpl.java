@@ -45,6 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category newCategory = new Category();
         newCategory.setName(dto.getName());
         newCategory.setUserId(getCurrentUserId());
+        newCategory.setType(dto.getType());
 
         newCategory = repository.save(newCategory);
 
